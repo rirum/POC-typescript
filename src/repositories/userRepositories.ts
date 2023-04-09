@@ -28,23 +28,23 @@ async function createSession({ token, userId }: Session){
     );
   }
   
-//   async function findSessionByToken(token) {
-//     return await connection.query(
-//       `
-//           SELECT * FROM sessions WHERE token = $1
-//       `,
-//       [token]
-//     );
-//   }
+  async function findSessionByToken(token: string) {
+    return await connection.query(
+      `
+          SELECT * FROM sessions WHERE token = $1
+      `,
+      [token]
+    );
+  }
   
-//   async function findById(id) {
-//     return await connection.query(
-//       `    
-//       SELECT * FROM users WHERE id=$1
-//     `,
-//       [id]
-//     );
-//   }
+  async function findById(id: number) {
+    return await connection.query(
+      `    
+      SELECT * FROM users WHERE id=$1
+    `,
+      [id]
+    );
+  }
 
 
 
@@ -53,4 +53,6 @@ export default {
     findByEmail,
     signup,
     createSession,
+    findSessionByToken,
+    findById,
 }
