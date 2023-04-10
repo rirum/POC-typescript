@@ -1,7 +1,8 @@
 import connection from "config/database";
-import { Book } from "protocols/bookProtocols";
+import { QueryResult } from "pg";
+import { Book, BookEntity } from "protocols/bookProtocols";
 
-async function create({name, author, userId}: Book){
+async function create({name, author, userId}: Book): Promise<void>{
     await connection.query(`
     INSERT INTO books (name, author, "userId")
     VALUES ($1, $2, $3)
@@ -10,7 +11,7 @@ async function create({name, author, userId}: Book){
     );
 }
 
-async function findByName(name: string){
+async function findByName(name: string): Promise<QueryResult<BookEntity>>{
     return await connection.query(`
     SELECT * FROM books WHERE name = $1;
     `,
@@ -31,7 +32,7 @@ async function findAll() {
     );
   }
   
-  async function findById(id: number) {
+  async function findById(id: number):Promise<QueryResult<BookEntity>> {
     return await connection.query(
       `
             SELECT * FROM books 
@@ -41,7 +42,7 @@ async function findAll() {
     );
   }
   
-  async function updateStatusBook(status: boolean, bookId:number) {
+  async function updateStatusBook(status: boolean, bookId:number) :Promise<void> {
     await connection.query(
       `
         UPDATE books
@@ -52,7 +53,7 @@ async function findAll() {
     );
   }
   
-  async function takeBook(userId: number, bookId: number) {
+  async function takeBook(userId: number, bookId: number):Promise<void> {
     await connection.query(
       `
         INSERT INTO "myBooks" ("userId", "bookId")

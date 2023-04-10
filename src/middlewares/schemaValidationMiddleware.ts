@@ -10,5 +10,6 @@ export function validateSchema(schema: ObjectSchema<UserBook>){
             
             throw err.conflictError(error.details[0].message);
         }
+        next();
     }
 }
